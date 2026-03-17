@@ -107,7 +107,7 @@ DAAPI int da_llistclear(t_llist *list, void (*f)(void *)) {
     t_llist cursor = *list;
     while (*list) {
         *list = (*list)->next;
-        da_llistdelone(list, f);
+        da_llistdelone(&cursor, f);
         cursor = *list;
     }
     return (1);
