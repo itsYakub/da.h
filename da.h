@@ -5,10 +5,5 @@
 #if !defined (_da_h_)
 # define _da_h_ 1
 #
-# /* fall-back to C++ */
-# if defined (__cplusplus)
-#  include "da.hpp"
-# else
-#  include "llist.h"
-# endif /* __cplusplus */
+# include "llist.h"
 #endif /* _da_h_ */

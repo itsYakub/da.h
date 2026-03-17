@@ -15,7 +15,7 @@ struct s_lnode {
     void *data;
 
     struct s_lnode *next;
-} s_lnode;
+};
 
 DAAPI t_llist da_llistnew(void *);
 
