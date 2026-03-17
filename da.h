@@ -6,4 +6,6 @@
 # define _da_h_ 1
 #
 # include "llist.h"
+# include "btree.h"
+#
 #endif /* _da_h_ */
