@@ -27,7 +27,9 @@ DAAPI int da_llistpushf(t_llist *, struct s_lnode *);
 
 DAAPI int da_llistpushb(t_llist *, struct s_lnode *);
 
-DAAPI int da_llistclear(t_llist *);
+DAAPI int da_llistdelone(t_llist *, void (*)(void *));
+
+DAAPI int da_llistclear(t_llist *, void (*)(void *));
 
 DAAPI size_t da_llistsize(t_llist);
 
@@ -91,15 +93,21 @@ DAAPI int da_llistpushb(t_llist *list, struct s_lnode *node) {
     return (1);
 }
 
-DAAPI int da_llistclear(t_llist *list) {
+DAAPI int da_llistdelone(t_llist *list, void (*f)(void *)) {
+    if (!list || !*list) { return (0); }
+
+    f((*list)->data);
+    free(*list);
+    return (1);
+}
+
+DAAPI int da_llistclear(t_llist *list, void (*f)(void *)) {
     if (!list || !*list) { return (0); }
 
     t_llist cursor = *list;
     while (*list) {
         *list = (*list)->next;
-
-        free(cursor->data);
-        free(cursor);
+        da_llistdelone(list, f);
         cursor = *list;
     }
     return (1);
