@@ -12,10 +12,10 @@
 typedef struct s_bnode *t_btree;
 
 struct s_bnode {
-    void *data;
+    void *b_data;
 
-    struct s_bnode *left;
-    struct s_bnode *right;
+    struct s_bnode *b_left;
+    struct s_bnode *b_right;
 };
 
 DAAPI t_btree da_btreenew(void *);
@@ -30,9 +30,9 @@ DAAPI t_btree da_btreenew(void *data) {
         return (0);
     }
 
-    tree->data  = data;
-    tree->left  = 0;
-    tree->right = 0;
+    tree->b_data  = data;
+    tree->b_left  = 0;
+    tree->b_right = 0;
     return (tree);
 }
 
@@ -40,11 +40,11 @@ DAAPI int da_btreeclear(t_btree *tree, void (*f)(void *)) {
     if (!tree || !*tree) { return (0); }
 
     /* recursive 'left' leave cleanup... */
-    da_btreeclear(&(*tree)->left, f);
+    da_btreeclear(&(*tree)->b_left, f);
     /* recursive 'right' leave cleanup... */
-    da_btreeclear(&(*tree)->right, f);
+    da_btreeclear(&(*tree)->b_right, f);
 
-    f((*tree)->data);
+    f((*tree)->b_data);
     free(*tree);
     return (1);
 }
