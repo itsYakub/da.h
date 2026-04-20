@@ -5,9 +5,10 @@ MK_NAME		= da
 
 # ========
 
-MODULES		= $(MK_ROOT)da.h 	\
-			  $(MK_ROOT)llist.h \
-			  $(MK_ROOT)btree.h \
+MODULES		= $(MK_ROOT)da.h 	 \
+			  $(MK_ROOT)llist.h  \
+			  $(MK_ROOT)btree.h  \
+			  $(MK_ROOT)vector.h \
 
 # ========
 
