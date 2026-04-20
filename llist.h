@@ -12,9 +12,9 @@
 typedef struct s_lnode *t_llist;
 
 struct s_lnode {
-    void *l_dat;
+    void *l_data;
 
-    struct s_lnode *l_nxt;
+    struct s_lnode *l_next;
 };
 
 DAAPI t_llist da_llistnew(void *);
@@ -41,8 +41,8 @@ DAAPI t_llist da_llistnew(void *data) {
         return (0);
     }
 
-    list->l_dat = data;
-    list->l_nxt = 0;
+    list->l_data = data;
+    list->l_next = 0;
     return (list);
 }
 
@@ -50,7 +50,7 @@ DAAPI t_llist da_llistat(t_llist list, size_t index) {
     if (!list) { return (0); }
 
     for (size_t i = 0; i < index; i++) {
-        list = list->l_nxt;
+        list = list->l_next;
 
         /* break if end-of-list reached... */
         if (!list) {
@@ -64,15 +64,15 @@ DAAPI t_llist da_llistat(t_llist list, size_t index) {
 DAAPI t_llist da_llistlast(t_llist list) {
     if (!list) { return (0); }
 
-    while (list->l_nxt) {
-        list = list->l_nxt;
+    while (list->l_next) {
+        list = list->l_next;
     }
 
     return (list);
 }
 
 DAAPI int da_llistpushf(t_llist *list, struct s_lnode *node) {
-    node->l_nxt = *list;
+    node->l_next = *list;
     *list = node;
 
     return (1);
@@ -88,7 +88,7 @@ DAAPI int da_llistpushb(t_llist *list, struct s_lnode *node) {
             return (0);
         }
 
-        last->l_nxt = node;
+        last->l_next = node;
     }
     return (1);
 }
@@ -96,7 +96,7 @@ DAAPI int da_llistpushb(t_llist *list, struct s_lnode *node) {
 DAAPI int da_llistdelone(t_llist *list, void (*f)(void *)) {
     if (!list || !*list) { return (0); }
 
-    f((*list)->l_dat);
+    f((*list)->l_data);
     free(*list);
     return (1);
 }
@@ -106,7 +106,7 @@ DAAPI int da_llistclear(t_llist *list, void (*f)(void *)) {
 
     t_llist cursor = *list;
     while (*list) {
-        *list = (*list)->l_nxt;
+        *list = (*list)->l_next;
         da_llistdelone(&cursor, f);
         cursor = *list;
     }
@@ -117,8 +117,8 @@ DAAPI size_t da_llistsize(t_llist list) {
     if (!list) { return (0); }
     
     size_t i;
-    for (i = 1; list->l_nxt; i++) {
-        list = list->l_nxt;
+    for (i = 1; list->l_next; i++) {
+        list = list->l_next;
     }
 
     return (i);
